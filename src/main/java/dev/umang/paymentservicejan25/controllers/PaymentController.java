@@ -1,6 +1,7 @@
 package dev.umang.paymentservicejan25.controllers;
 
 import com.razorpay.RazorpayException;
+import com.stripe.exception.StripeException;
 import dev.umang.paymentservicejan25.dtos.GeneratePaymentLinkRequestDTO;
 import dev.umang.paymentservicejan25.services.PaymentService;
 import dev.umang.paymentservicejan25.services.RazorPayGateWay;
@@ -25,8 +26,8 @@ public class PaymentController {
 
     //Are we just fetching info already there? or we are creating something??
     @PostMapping("/payments")
-    public String generatePaymentLink(@RequestBody GeneratePaymentLinkRequestDTO generatePaymentLinkRequestDTO) throws RazorpayException {
+    public String generatePaymentLink(@RequestBody GeneratePaymentLinkRequestDTO generatePaymentLinkRequestDTO) throws RazorpayException, StripeException {
         //Health check, decide which gateway to call
-        return razorPayGateWay.generatePaymentLink(generatePaymentLinkRequestDTO.getOrderId());
+        return stripeGateWay.generatePaymentLink(generatePaymentLinkRequestDTO.getOrderId());
     }
 }
